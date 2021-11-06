@@ -1,6 +1,6 @@
-import QtQuick
-import QtQuick.Window
-import QtQuick.Controls
+import QtQuick 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.12
 
 Window {
     id: root
@@ -8,6 +8,65 @@ Window {
     height: 480
     visible: true
     title: qsTr("Open Whiteboard")
+
+    Dialog {
+        id: colorDialog
+        modal: true
+        title: "Color picker"
+        Label {
+            text: "Lorem ipsum..."
+        }
+        ColorPicker {
+            id: colorPicker
+            width: 640
+            height: 400
+
+            onColorChanged: {
+                console.log("Color changed: ", changedColor)
+                mouse.setColor(changedColor)
+            }
+        }
+
+        width: colorPicker.width + 60
+        height:  colorPicker.height + 80
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        onAccepted: console.log("Ok clicked")
+        onRejected: console.log("Cancel clicked")
+    }
+
+    Dialog {
+        id: widthDialog
+        modal: true
+        title: "Pen width"
+        Label {
+            text: "Lorem ipsum..."
+        }
+        WidthPicker {
+            id: widthPicker
+            width: 400
+            height: 200
+
+            onWidthChanged: {
+                console.log("Width changed: ", changedWidth)
+                mouse.setWidth(changedWidth)
+            }
+        }
+
+        width: colorPicker.width + 60
+        height:  colorPicker.height + 80
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+
+        standardButtons: Dialog.Ok | Dialog.Cancel
+
+        onAccepted: console.log("Ok clicked")
+        onRejected: console.log("Cancel clicked")
+    }
 
     Row {
         id: tools
@@ -25,6 +84,22 @@ Window {
             text: "Save"
             onClicked: {
                 mouse.save()
+            }
+        }
+
+        Button {
+            id: pen_color
+            text: "Color"
+            onClicked: {
+                colorDialog.open()
+            }
+        }
+
+        Button {
+            id: pen_width
+            text: "Width"
+            onClicked: {
+                widthDialog.open()
             }
         }
     }
@@ -46,8 +121,8 @@ Window {
 
         onPaint: {
             var ctx = getContext("2d")
-            ctx.lineWidth = 2
-            ctx.strokeStyle = color.red
+            ctx.lineWidth = mouse.getWidth()
+            ctx.strokeStyle = mouse.getColor()
             ctx.beginPath()
             ctx.moveTo(lastX, lastY)
             lastX = area.mouseX

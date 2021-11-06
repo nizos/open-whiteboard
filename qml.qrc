@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>ColorPicker.qml</file>
+        <file>WidthPicker.qml</file>
+        <file>images/hello-pen.JPEG</file>
+        <file>images/hello-text.JPEG</file>
+        <file>images/math-pen.JPEG</file>
+        <file>images/math-text.JPEG</file>
     </qresource>
 </RCC>

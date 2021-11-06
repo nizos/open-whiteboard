@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
-#include "mousememory.h"
+#include "whiteboard.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QScopedPointer<MouseMemory> mouse(new MouseMemory);
+    QScopedPointer<Whiteboard> mouse(new Whiteboard);
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
