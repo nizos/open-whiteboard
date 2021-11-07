@@ -1,6 +1,6 @@
-import QtQuick 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 
 Window {
     id: root
@@ -9,106 +9,38 @@ Window {
     visible: true
     title: qsTr("Open Whiteboard")
 
-    Dialog {
-        id: colorDialog
-        modal: true
-        title: "Color picker"
-        Label {
-            text: "Lorem ipsum..."
-        }
-        ColorPicker {
-            id: colorPicker
-            width: 640
-            height: 400
+    Toolbar {
+        id: toolBar
+        x: parent.x
+        y: parent.y
+        height: 80
+        width: parent.width
 
-            onColorChanged: {
-                console.log("Color changed: ", changedColor)
-                mouse.setColor(changedColor)
-            }
+        onColorChanged: function(newColor) {
+            mouse.setColor(newColor)
+        }
+        onSizeChanged: function(newSize) {
+            mouse.setSize(newSize)
         }
 
-        width: colorPicker.width + 60
-        height:  colorPicker.height + 80
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-
-
-        standardButtons: Dialog.Ok | Dialog.Cancel
-
-        onAccepted: console.log("Ok clicked")
-        onRejected: console.log("Cancel clicked")
-    }
-
-    Dialog {
-        id: widthDialog
-        modal: true
-        title: "Pen width"
-        Label {
-            text: "Lorem ipsum..."
-        }
-        WidthPicker {
-            id: widthPicker
-            width: 400
-            height: 200
-
-            onWidthChanged: {
-                console.log("Width changed: ", changedWidth)
-                mouse.setWidth(changedWidth)
-            }
+        onOpenFile: function() {
+            // TODO
         }
 
-        width: colorPicker.width + 60
-        height:  colorPicker.height + 80
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-
-        standardButtons: Dialog.Ok | Dialog.Cancel
-
-        onAccepted: console.log("Ok clicked")
-        onRejected: console.log("Cancel clicked")
-    }
-
-    Row {
-        id: tools
-
-        Button {
-            id: clear
-            text: "Clear"
-            onClicked: {
-                canvas.clear()
-            }
+        onSaveFile: function() {
+            // TODO
         }
 
-        Button {
-            id: save
-            text: "Save"
-            onClicked: {
-                mouse.save()
-            }
-        }
-
-        Button {
-            id: pen_color
-            text: "Color"
-            onClicked: {
-                colorDialog.open()
-            }
-        }
-
-        Button {
-            id: pen_width
-            text: "Width"
-            onClicked: {
-                widthDialog.open()
-            }
+        onClearCanvas: function() {
+            canvas.clear()
         }
     }
 
     Canvas {
         id: canvas
-        anchors.top: tools.bottom
+        anchors.top: toolBar.bottom
         width: root.width
-        height: root.height
+        height: root.height - toolBar.height
         property int lastX: 0
         property int lastY: 0
 
@@ -119,9 +51,9 @@ Window {
             mouse.clear()
         }
 
-        onPaint: {
+        onPaint: function() {
             var ctx = getContext("2d")
-            ctx.lineWidth = mouse.getWidth()
+            ctx.lineWidth = mouse.getSize()
             ctx.strokeStyle = mouse.getColor()
             ctx.beginPath()
             ctx.moveTo(lastX, lastY)
@@ -136,13 +68,13 @@ Window {
 
         MouseArea {
             id: area
-            anchors.fill: parent
-            onPressed: {
+            anchors.fill: canvas
+            onPressed: function() {
               canvas.lastX = mouseX
               canvas.lastY = mouseY
             }
 
-            onPositionChanged: {
+            onPositionChanged: function() {
                 canvas.requestPaint()
             }
         }

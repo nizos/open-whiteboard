@@ -7,5 +7,20 @@
         <file>images/hello-text.JPEG</file>
         <file>images/math-pen.JPEG</file>
         <file>images/math-text.JPEG</file>
+        <file>Toolbar.qml</file>
+        <file>assets/icons/border_color.svg</file>
+        <file>assets/icons/brush.svg</file>
+        <file>assets/icons/cancel_presentation.svg</file>
+        <file>assets/icons/clear.svg</file>
+        <file>assets/icons/colorize.svg</file>
+        <file>assets/icons/draw.svg</file>
+        <file>assets/icons/edit.svg</file>
+        <file>assets/icons/gesture.svg</file>
+        <file>assets/icons/line_weight.svg</file>
+        <file>assets/icons/new_file.svg</file>
+        <file>assets/icons/open_file.svg</file>
+        <file>assets/icons/palette.svg</file>
+        <file>assets/icons/save.svg</file>
+        <file>components/ColorPalette.qml</file>
     </qresource>
 </RCC>

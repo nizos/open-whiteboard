@@ -27,10 +27,10 @@ public:
     Q_INVOKABLE bool getIsModified();
 
     Q_INVOKABLE void setColor(const QColor &newColor);
-    Q_INVOKABLE void setWidth(int newWidth);
+    Q_INVOKABLE void setSize(int newSize);
 
     Q_INVOKABLE QColor getColor();
-    Q_INVOKABLE int getWidth();
+    Q_INVOKABLE int getSize();
 
     Q_INVOKABLE void add(double x, double y);
     Q_INVOKABLE void add(QPointF point);
@@ -52,7 +52,7 @@ private:
 
     bool modified;
     bool painting;
-    int penWidth;
+    int penSize;
     QColor penColor;
     QImage image;
     QPoint lastPoint;

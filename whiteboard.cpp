@@ -15,8 +15,8 @@ Whiteboard::Whiteboard(QObject *parent) : QObject(parent)
 {
     modified = false;
     painting = false;
-    penWidth = 1;
-    penColor = penColor.fromRgb(0,0,33,243);
+    penSize = 2;
+    penColor = penColor.fromRgb(29,78,216,255);
 
     // Input image path
     imgPath = ":/images/hello-text.JPEG";
@@ -98,12 +98,11 @@ bool Whiteboard::saveImage(const QString &fileName, const char *fileFormat)
 void Whiteboard::add(double x, double y)
 {
     QPoint p(x,y);
-    qDebug() << "Adding " << p;
 }
 
 void Whiteboard::add(QPointF point)
 {
-    qDebug() << "Adding Float" << point;
+//    qDebug() << "Adding Float" << point;
 }
 
 void Whiteboard::clear()
@@ -124,28 +123,28 @@ QColor Whiteboard::getColor()
     return penColor;
 }
 
-int Whiteboard::getWidth()
+int Whiteboard::getSize()
 {
-    return penWidth;
+    return penSize;
 }
 
 void Whiteboard::setColor(const QColor &newColor)
 {
-    qDebug() << "Set Pen Color";
     penColor = newColor;
+    qDebug() << "Set Pen Color" << newColor;
 }
 
-void Whiteboard::setWidth(int newWidth)
+void Whiteboard::setSize(int newSize)
 {
-    qDebug() << "Set Pen Width";
-    penWidth = newWidth;
+    penSize = newSize;
+    qDebug() << "Set Pen Size" << newSize;
 }
 
 
 void Whiteboard::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
-        qDebug() << "mousePressEvent LeftButton";
+//        qDebug() << "mousePressEvent LeftButton";
         lastPoint = event->position().toPoint();
         painting = true;
     }
@@ -154,14 +153,14 @@ void Whiteboard::mousePressEvent(QMouseEvent *event)
 void Whiteboard::mouseMoveEvent(QMouseEvent *event)
 {
     if ((event->buttons() & Qt::LeftButton) && painting)
-        qDebug() << "mouseMoveEvent LeftButton";
+//        qDebug() << "mouseMoveEvent LeftButton";
         drawLineTo(event->position().toPoint());
 }
 
 void Whiteboard::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton && painting) {
-        qDebug() << "mouseReleaseEvent LeftButton";
+//        qDebug() << "mouseReleaseEvent LeftButton";
         drawLineTo(event->position().toPoint());
         painting = false;
     }
@@ -169,7 +168,7 @@ void Whiteboard::mouseReleaseEvent(QMouseEvent *event)
 
 void Whiteboard::paintEvent(QPaintEvent *event)
 {
-    qDebug() << "paintEvent";
+//    qDebug() << "paintEvent";
 //    QPainter painter(this);
 //    QRect dirtyRect = event->rect();
 //    painter.drawImage(dirtyRect, image, dirtyRect);
@@ -177,7 +176,7 @@ void Whiteboard::paintEvent(QPaintEvent *event)
 
 void Whiteboard::resizeEvent(QResizeEvent *event)
 {
-    qDebug() << "resizeEvent";
+//    qDebug() << "resizeEvent";
 //    if (width() > image.width() || height() > image.height()) {
 //        int newWidth = qMax(width() + 128, image.width());
 //        int newHeight = qMax(height() + 128, image.height());
@@ -204,7 +203,7 @@ void Whiteboard::resizeImage(QImage *image, const QSize &newSize)
     if (image->size() == newSize)
         return;
 
-    qDebug() << "resizeImage";
+//    qDebug() << "resizeImage";
     QImage newImage(newSize, QImage::Format_RGB32);
     newImage.fill(qRgb(255, 255, 255));
     QPainter painter(&newImage);
